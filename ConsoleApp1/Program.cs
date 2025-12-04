@@ -69,6 +69,7 @@ namespace Laboratorna2
 
             // Обробник подій 
             Developer eventDev = new Developer("Олексій", "Грицько", 23, "Python");
+            eventDev.OnWorkEnded += EventHandler;
             eventDev.OnWorkEnded += delegate (string msg)
             {
                 Console.WriteLine($"Отримано повідомлення {msg}");
