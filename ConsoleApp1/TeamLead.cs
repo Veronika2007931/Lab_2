@@ -4,7 +4,7 @@ using ManagerClass;
 
 namespace TeamLeadClass
 {
-    public class TeamLead : Meneger, IDeveloperWork, IManagerWork
+    public class TeamLead : Manager, IDeveloperWork, IManagerWork
     {
         protected string TeamTask;
         // Статичне поле для зберігання єдиного екземпляру для приватного конструктора 

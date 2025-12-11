@@ -10,6 +10,7 @@ using ManagerClass;
 using TeamLeadClass;
 using System.Security.Cryptography;
 using CollectionClass;
+using DataService;
 
 namespace Laboratorna2
 
@@ -68,83 +69,114 @@ namespace Laboratorna2
 
 
             // Обробник подій 
-            Developer eventDev = new Developer("Олексій", "Грицько", 23, "Python");
-            eventDev.OnWorkEnded += EventHandler;
-            eventDev.OnWorkEnded += delegate (string msg)
-            {
-                Console.WriteLine($"Отримано повідомлення {msg}");
-            };
-            eventDev.OnWorkEnded += (msg) => Console.WriteLine($"Прочитано повідомлення {msg}");
+        //     Developer eventDev = new Developer("Олексій", "Грицько", 23, "Python");
+        //     eventDev.OnWorkEnded += EventHandler;
+        //     eventDev.OnWorkEnded += delegate (string msg)
+        //     {
+        //         Console.WriteLine($"Отримано повідомлення {msg}");
+        //     };
+        //     eventDev.OnWorkEnded += (msg) => Console.WriteLine($"Прочитано повідомлення {msg}");
 
-            Func<int, string> expirience = (age) =>
-            {
-                if(age < 25) return "Джуніор";
-                if(age < 35) return "Мідл";
-                return "Сеньйор";
-            };
+        //     Func<int, string> expirience = (age) =>
+        //     {
+        //         if(age < 25) return "Джуніор";
+        //         if(age < 35) return "Мідл";
+        //         return "Сеньйор";
+        //     };
 
-            eventDev.OnWorkEnded += (msg) =>
-            {
-                string status = expirience(eventDev.Age);
-                Console.WriteLine($"Розробник має статус {status}");
-            };
+        //     eventDev.OnWorkEnded += (msg) =>
+        //     {
+        //         string status = expirience(eventDev.Age);
+        //         Console.WriteLine($"Розробник має статус {status}");
+        //     };
 
-            eventDev.dailyTask();
+        //     eventDev.dailyTask();
             
-            // Колекції, індексатори, сортування
-            Section ITSection = new Section("IT Section");
-            ITSection.AddUser(new Developer("Олег", "Ярмоленко", 25, "C++"));
-            ITSection.AddUser(new Tester());
-            ITSection.AddUser(new Developer("Анна", "Бойко", 22, "C#"));
+        //     // Колекції, індексатори, сортування
+        //     Section ITSection = new Section("IT Section");
+        //     ITSection.AddUser(new Developer("Олег", "Ярмоленко", 25, "C++"));
+        //     ITSection.AddUser(new Tester());
+        //     ITSection.AddUser(new Developer("Анна", "Бойко", 22, "C#"));
 
-            Employee found = ITSection["Костюк"];
-            if(found != null)
+        //     Employee found = ITSection["Костюк"];
+        //     if(found != null)
+        //     {
+        //         found.dailyTask();
+        //     }
+        //     else
+        //     {
+        //         Console.WriteLine("Співробітника не знайдено");
+        //     }
+
+        //     Console.WriteLine("Співробітники до сортування");
+        //     foreach(var emp in ITSection)
+        //     {
+        //         Console.WriteLine($"{emp.LastName} {emp.Name}");
+        //     }
+        //     ITSection.SortStuff();
+
+        //      Console.WriteLine("Співробітники після сортування");
+        //     foreach(var emp in ITSection)
+        //     {
+        //         Console.WriteLine($"{emp.LastName} {emp.Name}");
+        //     }
+
+        //     // Extentions method
+        // Developer dev3 = new Developer("Dmytro", "Kovalenko", 24, "Python");
+        // string email = dev3.GetCorporateEmail("lll.kpi.ua");
+        // Console.WriteLine(email);
+        // }
+
+        // static void EventHandler(string message)
+        // {
+        //     Console.WriteLine("Менеджер почув: " + message);
+        //     Console.WriteLine("Менеджер: Чудово, можеш йти додому.");
+        // }
+
+        // static void createGarbage()
+        // {
+        //     for(int i = 0; i<2000; i++)
+        //     {
+        //         Developer tempDev = new Developer("Сміттєвий", "Об'єкт", 20, "C#");
+        //     }
+        // }
+
+        List<Employee> staff = DataManager.LoadData();
+        if(staff.Count == 0)
             {
-                found.dailyTask();
+                Console.WriteLine("База порожня. Додаємо нових співробітників...");
+                staff.Add(new Developer("Іван", "Холод", 25, "C#"));
+                staff.Add(new Tester()); 
+                staff.Add(new Manager("Ольга", "Бондарчук", 30));
             }
             else
             {
-                Console.WriteLine("Співробітника не знайдено");
+                Console.WriteLine("Виводимо завантажений список:");
+                foreach(var emp in staff)
+                {
+                    Console.WriteLine($"- {emp.GetType().Name} {emp.Name} {emp.LastName}");
+                   
+                }
             }
 
-            Console.WriteLine("Співробітники до сортування");
-            foreach(var emp in ITSection)
+            Console.WriteLine("\nБажаєте додати нового розробника? (y/n)");
+            string input = Console.ReadLine();
+            if (input.ToLower() == "y")
             {
-                Console.WriteLine($"{emp.LastName} {emp.Name}");
-            }
-            ITSection.SortStuff();
-
-             Console.WriteLine("Співробітники після сортування");
-            foreach(var emp in ITSection)
-            {
-                Console.WriteLine($"{emp.LastName} {emp.Name}");
+                Console.Write("Введіть ім'я: ");
+                string name = Console.ReadLine();
+                Console.Write("Введіть фамілію: ");
+                string lastName = Console.ReadLine();
+                 
+                staff.Add(new Developer(name,lastName, 20, "Python"));
             }
 
-            // Extentions method
-        Developer dev3 = new Developer("Dmytro", "Kovalenko", 24, "Python");
-        string email = dev3.GetCorporateEmail("lll.kpi.ua");
-        Console.WriteLine(email);
-        }
-
-        static void EventHandler(string message)
-        {
-            Console.WriteLine("Менеджер почув: " + message);
-            Console.WriteLine("Менеджер: Чудово, можеш йти додому.");
-        }
-
-        static void createGarbage()
-        {
-            for(int i = 0; i<2000; i++)
-            {
-                Developer tempDev = new Developer("Сміттєвий", "Об'єкт", 20, "C#");
-            }
-        }
-
+            DataManager.SaveData(staff);
         
     }
 }
 
-
+}
     
 
  

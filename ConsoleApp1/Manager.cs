@@ -3,11 +3,11 @@ using Interfaces;
 
 namespace ManagerClass
 {
-      public class Meneger : Employee, Report
+      public class Manager : Employee, Report
     {
         protected int Subordinates;
 
-        public Meneger(string name, string lastName, int age) : base(name, lastName, age) 
+        public Manager(string name, string lastName, int age) : base(name, lastName, age) 
     {
         
         Subordinates = 0; 

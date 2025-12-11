@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using EmployeeClass;
 using Interfaces;
 
@@ -5,12 +6,16 @@ namespace DeveloperClass
 {
     public class Developer : Employee, IDisposable,IDeveloperWork, Report
     {
-        protected string ProgrammingLanguage;
+        protected string ProgrammingLanguage { get; set; }
+        [JsonIgnore]
         private bool _isDisposed = false;
         // імітація некерованого ресурсу(файл)
+        [JsonIgnore]
         private System.IntPtr _fileHandle;
-
+        
         public event Action<string> OnWorkEnded;
+
+        public Developer() : base(){}
 
         ~Developer()
         {

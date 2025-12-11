@@ -1,9 +1,16 @@
+using System.Text.Json.Serialization;
+
 namespace EmployeeClass
 {
+    [JsonDerivedType(typeof(DeveloperClass.Developer), typeDiscriminator:"developer")]
+    [JsonDerivedType(typeof(TesterClass.Tester), typeDiscriminator:"tester")]
+    [JsonDerivedType(typeof(ManagerClass.Manager), typeDiscriminator:"manager")]
     public abstract class Employee: IComparable<Employee>
     {
-        public string Name;
-        public string LastName;
+
+        
+        public string Name {get; set;}
+        public string LastName{get; set;}
         private int age;
 
         public abstract void dailyTask();
@@ -13,7 +20,7 @@ namespace EmployeeClass
             if(other == null) return 1;
             return String.Compare(this.LastName, other.LastName, StringComparison.Ordinal);
         }
-        
+        public Employee(){}
          public Employee(string name, string lastName, int age)
         {
             Name = name;
